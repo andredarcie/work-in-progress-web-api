@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 [Route("[controller]")]
 public class DiretorController : ControllerBase {
     private readonly ApplicationDbContext _context;
+
     public DiretorController(ApplicationDbContext context) {
         _context = context;
     }

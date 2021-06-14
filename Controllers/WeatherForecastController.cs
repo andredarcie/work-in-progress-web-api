@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace hello.Controllers
+namespace hello_2.Controllers
 {
     [ApiController]
     [Route("[controller]")]

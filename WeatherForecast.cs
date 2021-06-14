@@ -1,6 +1,6 @@
 using System;
 
-namespace hello
+namespace hello_2
 {
     public class WeatherForecast
     {
