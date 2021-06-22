@@ -27,24 +27,26 @@ public class DiretorController : ControllerBase {
 
     // POST api/diretores
     [HttpPost]
-    public async Task<ActionResult<DiretorOutputDTO>> Post([FromBody] DiretorInputDTO diretorInputDto) {
+    public async Task<ActionResult<DiretorOutputPostDTO>> Post([FromBody] DiretorInputPostDTO diretorInputDto) {
         var diretor = new Diretor(diretorInputDto.Nome);
-        _context.Diretores.Add(diretor);
+        _context.Diretores.Add(diretor);                    
         
         await _context.SaveChangesAsync();
 
-        var diretorOutputDto = new DiretorOutputDTO(diretor.Id, diretor.Nome);
+        var diretorOutputDto = new DiretorOutputPostDTO(diretor.Id, diretor.Nome);
         return Ok(diretorOutputDto);
     }
 
     // PUT api/diretores/{id}
     [HttpPut("{id}")]
-    public async Task<ActionResult<Diretor>> Put(long id, [FromBody] Diretor diretor) {
+    public async Task<ActionResult<DiretorOuputPutDTO>> Put(long id, [FromBody] DiretorInputPutDTO diretorInputDto) {
+        var diretor = new Diretor(diretorInputDto.Nome);
         diretor.Id = id;
         _context.Diretores.Update(diretor);
         await _context.SaveChangesAsync();
 
-        return Ok(diretor);
+        var diretorOutputDto = new DiretorOuputPutDTO(diretor.Id, diretor.Nome);
+        return Ok(diretorOutputDto);
     }
 
     // DELETE api/diretores/{id}
@@ -53,6 +55,6 @@ public class DiretorController : ControllerBase {
         var diretor = await _context.Diretores.FirstOrDefaultAsync(diretor => diretor.Id == id);
         _context.Remove(diretor);
         await _context.SaveChangesAsync();
-        return Ok(diretor);
+        return Ok();
     }
 }
