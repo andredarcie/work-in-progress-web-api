@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,8 +16,12 @@ public class FilmeController : ControllerBase {
 
     // GET api/filmes
     [HttpGet]
-    public async Task<List<FilmeOutPutGetAllDTO>> Get() {
+    public async Task<ActionResult<List<FilmeOutPutGetAllDTO>>> Get() {
         var filmes = await _context.Filmes.ToListAsync();
+
+        if (!filmes.Any()) {
+            return NotFound("Não existem diretores cadastrados!");
+        }
 
         var outputDTOList = new List<FilmeOutPutGetAllDTO>();
 
@@ -30,6 +36,10 @@ public class FilmeController : ControllerBase {
     [HttpGet("{id}")]
     public async Task<ActionResult<FilmeOutputGetByIdDTO>> Get(long id) {
         var filme = await _context.Filmes.Include(filme => filme.Diretor).FirstOrDefaultAsync(filme => filme.Id == id);
+
+        if (filme == null) {
+            throw new ArgumentNullException("Filme não encontrado!");
+        }
 
         var outputDTO = new FilmeOutputGetByIdDTO(filme.Id, filme.Titulo, filme.Diretor.Nome);
         return Ok(outputDTO);
@@ -58,6 +68,10 @@ public class FilmeController : ControllerBase {
     [HttpPut("{id}")]
     public async Task<ActionResult<FilmeOutputPutDTO>> Put(long id, [FromBody] FilmeInputPutDTO inputDTO) {
         var filme = new Filme(inputDTO.Titulo, inputDTO.DiretorId);
+
+        if (inputDTO.DiretorId == 0) {
+            return NotFound("Id do diretor é inválido!");
+        }
 
         filme.Id = id;
         _context.Filmes.Update(filme);
