@@ -61,6 +61,7 @@ public class DiretorController : ControllerBase {
     /// <returns>O diretor criado</returns>
     /// <response code="200">Diretor foi criado com sucesso</response>
     /// <response code="500">Erro interno inesperado</response>
+    /// <response code="400">Erro de validação</response>
     [HttpPost]
     public async Task<ActionResult<DiretorOutputPostDTO>> Post([FromBody] DiretorInputPostDTO diretorInputDto) {
         var diretor = new Diretor(diretorInputDto.Nome);
@@ -72,7 +73,23 @@ public class DiretorController : ControllerBase {
         return Ok(diretorOutputDto);
     }
 
-    // PUT api/diretores/{id}
+    /// <summary>
+    /// Cria um diretor
+    /// </summary>
+    /// <remarks>
+    /// Sample request:
+    ///
+    ///     PUT /diretor/{id}
+    ///     {
+    ///        "nome": "Martin Scorsese"
+    ///     }
+    ///
+    /// </remarks>
+    /// <param name="id">Id do diretor</param>
+    /// <param name="diretorInputDto">Nome do diretor</param>
+    /// <returns>O diretor criado</returns>
+    /// <response code="200">Diretor foi criado com sucesso</response>
+    /// <response code="500">Erro interno inesperado</response>
     [HttpPut("{id}")]
     public async Task<ActionResult<DiretorOuputPutDTO>> Put(long id, [FromBody] DiretorInputPutDTO diretorInputDto) {
         var diretor = new Diretor(diretorInputDto.Nome);
