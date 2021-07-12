@@ -45,7 +45,22 @@ public class DiretorController : ControllerBase {
         return Ok(outputDto);
     }
 
-    // POST api/diretores
+    /// <summary>
+    /// Cria um diretor
+    /// </summary>
+    /// <remarks>
+    /// Sample request:
+    ///
+    ///     POST /diretor
+    ///     {
+    ///        "nome": "Martin Scorsese"
+    ///     }
+    ///
+    /// </remarks>
+    /// <param name="diretorInputDto">Nome do diretor</param>
+    /// <returns>O diretor criado</returns>
+    /// <response code="200">Diretor foi criado com sucesso</response>
+    /// <response code="500">Erro interno inesperado</response>
     [HttpPost]
     public async Task<ActionResult<DiretorOutputPostDTO>> Post([FromBody] DiretorInputPostDTO diretorInputDto) {
         var diretor = new Diretor(diretorInputDto.Nome);
