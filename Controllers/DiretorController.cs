@@ -9,19 +9,17 @@ using Microsoft.EntityFrameworkCore;
 [Route("[controller]")]
 public class DiretorController : ControllerBase {
     private readonly ApplicationDbContext _context;
+    private readonly IDiretorService _diretorService;
 
-    public DiretorController(ApplicationDbContext context) {
+    public DiretorController(ApplicationDbContext context, IDiretorService diretorService) {
         _context = context;
+        _diretorService = diretorService;
     }
 
     // GET api/diretores
     [HttpGet]
     public async Task<ActionResult<List<DiretorOutputGetAllDTO>>> Get() {
-        var diretores = await _context.Diretores.ToListAsync();
-
-        if (!diretores.Any()) {
-            return NotFound("Não existem diretores cadastrados!");
-        }
+        var diretores = await _diretorService.GetAll();
 
         var outputDTOList = new List<DiretorOutputGetAllDTO>();
 

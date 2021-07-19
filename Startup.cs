@@ -39,6 +39,7 @@ namespace hello_2
                 c.IncludeXmlComments(xmlPath);
             });
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Data Source=myapp.db"));
+            services.AddScoped<IDiretorService, DiretorService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
