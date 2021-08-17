@@ -4,7 +4,7 @@ using FluentValidation.TestHelper;
 
 namespace MeuAppTests
 {
-    public class UnitTest1
+    public class DiretorValidatorTests
     {
         [Fact]
         public void NomeDoDiretorDeveApresentarErroSeForNull()
