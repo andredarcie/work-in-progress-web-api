@@ -15,7 +15,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
 
-namespace hello_2
+namespace MeuApp
 {
     public class Startup
     {
@@ -37,7 +37,7 @@ namespace hello_2
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "hello_2", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "MeuApp", Version = "v1" });
 
                 // To Enable authorization using Swagger (JWT)
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
@@ -107,11 +107,12 @@ namespace hello_2
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "hello_2 v1"));
             }
 
-            app.UseHttpsRedirection();
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MeuApp v1"));
+
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
