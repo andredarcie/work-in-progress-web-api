@@ -29,6 +29,12 @@ namespace MeuApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("Default")), ServiceLifetime.Transient);
+
+            // For Identity
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
             services.AddControllers().AddFluentValidation(options =>
             {
@@ -71,11 +77,6 @@ namespace MeuApp
                 c.IncludeXmlComments(xmlPath);
             });
 
-            // For Identity
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
-
             // Adding Authentication
             services.AddAuthentication(options =>
             {
@@ -96,9 +97,8 @@ namespace MeuApp
                     };
             });
 
-            services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("Default")));
-            services.AddScoped<IDiretorService, DiretorService>();
-            services.AddScoped<IFilmeService, FilmeService>();
+            services.AddTransient<IDiretorService, DiretorService>();
+            services.AddTransient<IFilmeService, FilmeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

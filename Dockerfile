@@ -19,4 +19,4 @@ COPY --from=publish /app/publish .
 RUN useradd -m myappuser
 USER myappuser
 
-CMD ASPNETCORE_URLS="http://*:$PORT" dotnet MeuApp.dll
+CMD ASPNETCORE_URLS="http://*:5000" dotnet MeuApp.dll

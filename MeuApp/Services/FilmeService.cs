@@ -26,7 +26,7 @@ public class FilmeService : IFilmeService {
             CurrentPage = pagedModel.CurrentPage,
             TotalPages = pagedModel.TotalPages,
             TotalItems = pagedModel.TotalItems,
-            Items = pagedModel.Items.Select(filme => new FilmeOutPutGetAllDTO(filme.Id, filme.Titulo)).ToList()
+            Items = pagedModel.Items.Select(diretor => new FilmeOutPutGetAllDTO(diretor.Id, diretor.Titulo)).ToList()
         };
     }
 
