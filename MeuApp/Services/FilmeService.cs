@@ -41,6 +41,12 @@ public class FilmeService : IFilmeService {
     }
 
     public async Task<Filme> Cria(Filme filme) {
+        var diretor = _context.Diretores.FirstOrDefault(diretor => diretor.Id == filme.DiretorId);
+
+        if (diretor == null) {
+            throw new Exception("Diretor não encontrado!");
+        }
+
         _context.Filmes.Add(filme);                    
         
         await _context.SaveChangesAsync();
@@ -49,11 +55,25 @@ public class FilmeService : IFilmeService {
     }
 
     public async Task<Filme> Atualiza(Filme filme, long id) {
-        filme.Id = id;
-        _context.Filmes.Update(filme);
+        var diretor = _context.Diretores.FirstOrDefault(diretor => diretor.Id == filme.DiretorId);
+
+        if (diretor == null) {
+            throw new Exception("Diretor não encontrado!");
+        }
+
+        var filmeNoDb = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
+
+        if (filmeNoDb == null) {
+            throw new Exception("Filme não encontrado!");
+        }
+
+        filmeNoDb.Titulo = filme.Titulo;
+        filmeNoDb.DiretorId = filme.DiretorId;
+
+        _context.Filmes.Update(filmeNoDb);
         await _context.SaveChangesAsync();
 
-        return filme;
+        return filmeNoDb;
     }
 
     public async Task Exclui(long id) {

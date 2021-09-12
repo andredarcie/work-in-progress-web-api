@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-[Authorize]
 [ApiController]
 [Route("[controller]")]
 public class DiretorController : ControllerBase {
